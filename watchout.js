@@ -8,7 +8,7 @@ var size = 10;
 var svg = d3.select("body").append("svg").append("g");
 
 
-var update = function(data) {
+var renderEnemy = function(data) {
 
   var enemies = svg.selectAll("circle").data(data, function(d){return d.id;});
 
@@ -24,8 +24,9 @@ var update = function(data) {
 };
 
 
+
 setInterval(function(){
-  update(randomPosition(30));
+  renderEnemy(randomPosition(30));
 }, 1000);
 
 
