@@ -16,7 +16,7 @@ var update = function(data) {
   .attr("r", size)
   .attr("class", "enemy");
 
-  enemies.transition().attr("cx", function(d){return d.x;})
+  enemies.transition().duration(1000).attr("cx", function(d){return d.x;})
   .attr("cy", function(d){return d.y;});
 
   enemies.exit().remove();
@@ -26,7 +26,7 @@ var update = function(data) {
 
 setInterval(function(){
   update(randomPosition(30));
-}, 500);
+}, 1000);
 
 
 var randomPosition = function(num){
