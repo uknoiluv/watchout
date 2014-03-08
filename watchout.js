@@ -5,53 +5,41 @@ var width = 600;
 var height = 600;
 var size = 10;
 
-var svg = d3.select("body").append("svg")
-  .attr("width", width)
-  .attr("height", height)
-  .attr("background", "#ccc");
-  // .append("g");
-
-
-// svg.append("rect")
-//   .attr("width", width)
-//   .attr("height", height)
-//   .attr("fill", "#ccc");
+var svg = d3.select("body").append("svg").append("g");
 
 
 var update = function(data) {
 
-  svg.selectAll('circle').data(data).enter()
+  var enemies = svg.selectAll("circle").data(data, function(d){return d.id;});
 
+  enemies.enter().append("circle")
+  .attr("r", size)
+  .attr("class", "enemy");
 
-  var enemies = svg.selectAll("circle").data(data);
+  enemies.transition().attr("cx", function(d){return d.x;})
+  .attr("cy", function(d){return d.y;});
 
-  enemies.attr("class","update");
-
-  enemies.enter().append("enemies")
-    .attr("class", "enter")
-    .attr("cx", function(d){return d.x;})
-    .attr("cy", function(d){return d.y;})
-    .attr("r", size);
-  // enemies.enter().append("circle");
   enemies.exit().remove();
 
 };
+
 
 setInterval(function(){
   update(randomPosition(30));
 }, 500);
 
+
 var randomPosition = function(num){
   var array = [];
-  var posObj ={};
   for (var i = 0; i < num; i++){
-    posObj['x'] = (Math.random()*600);
-    posObj['y'] = (Math.random()*600);
-    array.push(posObj)
+    var posObj ={};
+    posObj['id'] = i;
+    posObj['x'] = Math.random()*600;
+    posObj['y'] = Math.random()*600;
+    array.push(posObj);
   }
   console.log(array);
   return array;
-  // return posObj;
 };
 
 
