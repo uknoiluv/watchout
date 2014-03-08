@@ -7,10 +7,11 @@ text {
   font: bold 48px monospace;
 }
 */
-.enter {
-  fill: green;
+
+.player {
+  fill: orange;
 }
 
-.update {
-  fill: #333;
+.enemy {
+  fill: #bbb;
 }

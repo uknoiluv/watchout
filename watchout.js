@@ -4,6 +4,7 @@
 var width = 600;
 var height = 600;
 var size = 10;
+var pos = 300;
 
 var svg = d3.select("body").append("svg").append("g");
 
@@ -23,6 +24,29 @@ var renderEnemy = function(data) {
 
 };
 
+// # svg:rect x="0" y="0" width="0" height="0" rx="0" ry="0"
+
+var renderPlayer = function(data){
+  var player = svg.selectAll("rect").data(data);
+  player.enter().append("rect").attr("class", "player");
+  player.attr("width", 20).attr("height", 20).attr("x", function(d){return d.x;})
+    .attr("y", function(d){return d.y;});
+
+
+
+  var dragMove = function(){
+    playerX += d3.event.dx;
+    playerY += d3.event.dy;
+    renderPlayer([{"x":playerX, "y":playerY}]);
+  };
+
+  player.call(d3.behavior.drag().on('drag', dragMove));
+};
+
+var playerX = 300;
+var playerY = 300;
+
+renderPlayer([{"x":playerX, "y":playerY}]);
 
 
 setInterval(function(){
