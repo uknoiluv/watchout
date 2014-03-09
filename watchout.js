@@ -63,10 +63,31 @@ var randomPosition = function(num){
     posObj['y'] = Math.random()*600;
     array.push(posObj);
   }
-  console.log(array);
+  // console.log(array);
   return array;
 };
+var globalCounter = 1;
+d3.timer(function(t){
+  var player = svg.selectAll("rect");
+  var enemies = svg.selectAll("circle");
+  // console.log(player);
+  var px = player.attr('x');
+  var py = player.attr('y');
+  // var collision = false;
+  enemies.each(function(d, i){
+    var ex = d3.select(this).attr('cx');
+    var ey = d3.select(this).attr('cy');
+    var x = ex - px;
+    var y = ey - py;
+    var d = Math.sqrt(x * x + y * y);
+    if(d < size * 2){
+      player.classed({'collision': true, 'player':false});
+      // console.log('collision :', collision);
+    }
+  });
 
+
+});
 
 
 // var circlesArray = function(num, size){

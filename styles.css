@@ -15,3 +15,7 @@ text {
 .enemy {
   fill: #bbb;
 }
+
+.collision {
+  fill: pink;
+}
