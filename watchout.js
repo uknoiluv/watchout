@@ -1,10 +1,17 @@
 // start slingin' some d3 here.
 
 
-var width = 600;
-var height = 600;
+var width = window.innerWidth;
+var height = window.innerHeight;
 var size = 10;
 var pos = 300;
+var highScore = 0;
+var currentScore = 0;
+var collisions = 0;
+
+var timeStart = new Date();
+  timeStart = timeStart.getTime();
+
 
 var svg = d3.select("body").append("svg").append("g");
 
@@ -59,29 +66,48 @@ var randomPosition = function(num){
   for (var i = 0; i < num; i++){
     var posObj ={};
     posObj['id'] = i;
-    posObj['x'] = Math.random()*600;
-    posObj['y'] = Math.random()*600;
+    posObj['x'] = Math.random() * width;
+    posObj['y'] = Math.random() * height;
     array.push(posObj);
   }
   // console.log(array);
   return array;
 };
-var globalCounter = 1;
+
 d3.timer(function(t){
+
   var player = svg.selectAll("rect");
   var enemies = svg.selectAll("circle");
   // console.log(player);
   var px = player.attr('x');
   var py = player.attr('y');
-  // var collision = false;
+  var timeEnd = new Date();
+  timeEnd = timeEnd.getTime();
+  var score = Math.floor((timeEnd - timeStart)/100);
+  currentScore = score;
+  d3.select('.cs').text(currentScore.toString());
+
   enemies.each(function(d, i){
     var ex = d3.select(this).attr('cx');
     var ey = d3.select(this).attr('cy');
     var x = ex - px;
     var y = ey - py;
     var d = Math.sqrt(x * x + y * y);
-    if(d < size * 2){
+    if(d < size * 2 && d > size * 1){
+      collisions++;
+      d3.select('.col').text(collisions.toString());
       player.classed({'collision': true, 'player':false});
+      timeStart = timeEnd;
+      if(score > highScore){
+        highScore = score;
+      }
+      console.log(highScore);
+      console.log(currentScore);
+      console.log(collisions);
+      console.log(timeStart);
+      console.log(timeEnd);
+      d3.select('.hs').text(highScore.toString());
+
       // console.log('collision :', collision);
     }
   });
