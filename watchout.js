@@ -44,19 +44,20 @@ var update = function(data){
   enemy.exit().remove();
 };
 
-var detectCollision = function(){
-  var enemy = svg.selectAll(".enemy").data();
-  var player = svg.selectAll(".player").data();
-  // for(var i = 0; i < enemy.length; i++){
-  //   var dx = enemy[i].x
-  //   var dy = 
-  // }
-};
+makeEnemies(30, width, height)
 
 setInterval(function(){
   update(makeEnemies(30, width, height))
-}, 1500);
+}, 2000);
 
-setInterval(function(){
-  detectCollision();
-}, 50);
+d3.timer(function(){
+    var enemy = svg.selectAll(".enemy").data();
+    for(var i = 0; i < enemy.length ;i++){
+      var dx = enemy[i].x - player.attr("cx");
+      var dy = enemy[i].y - player.attr("cy");
+      if((dx * dx + dy * dy) < 2 * (radius * radius)){
+        console.log('hit');
+      }
+    }
+  }
+)
